@@ -19,6 +19,91 @@ A web server is just a server that sends dynamic HTML pages, meaning that the HT
 
 In this unit, we'll be writing web applications that a computer will run that will allow the computer to respond to other computers that try to connect to it.  We'll write this code in JavaScript using Node.js, which allows us to write computer applications using JavaScript.
 
+## What does it mean to program a server?
+
+We need to write the code that handles requests and figures out how to respond. It might need to format data into JSON, it might need to talk to a database to request a specific resource, and it might need to check if a user is authorized to see the resource they have requested.
+
+To write server side code, is to lay out all of the possible requests that might come in and give instructions for how to handle each type of request.
+
+![request](https://i.imgur.com/YXgj8.png)
+
+
+![image](https://cloud.githubusercontent.com/assets/6520345/18041555/0345ba10-6d6f-11e6-9a6f-c008aac1935a.png)
+
+### What is Node?
+
+![image](https://cloud.githubusercontent.com/assets/6520345/18023104/d38c2168-6ba9-11e6-997c-24b3a2652991.png)
+
+![image](https://cloud.githubusercontent.com/assets/6520345/18023096/c368ce26-6ba9-11e6-805a-4562a8853721.png)
+
+V8, the JavaScript engine that runs Chrome, is a piece of code written in C++. It creates a processor to take in JS code and translate it to make actionable assembly code/machine code so that the CPU can “do” what you have asked it to in JavaScript. Node is a program that has all of the V8 code and more. It extends V8; V8 is embedded in NodeJS, and Node adds more functionality and syntax that V8 wouldn’t be able to understand. This syntax allows you to write server-side code. (V8 is created to meet the EcmaScript 6 - the standard that defines JavaScript).
+
+- Node.js provides the ability to handle requests and issue responses.
+- It is fast.
+- It is fast largely because it is asynchronous, meaning code can run in parallel without "blocking" the call stack (the list of other concurrent commands).
+- Node really shines when it comes to heavy input-output type operations.
+- Realtime services like chat applications or conferencing platforms benefit from using Node.
+- APIs are also input/output heavy, and they also tend to work with JavaScript out of the box (think JSON). What better platform than Node?
+- Node is designed to accommodate [the module pattern](https://addyosmani.com/resources/essentialjsdesignpatterns/book/#modulepatternjavascript), which means that it allows developers to write useful functionality and then share it with other developers. It is easy to pull in useful modules into your project (like express). This keeps functionality separate and helps projects feel organized.
+
+### NPM and NPM Init
+- Node Package Manager, usually called NPM, is a tool that allows us to easily download community-built Node packages.
+  * For example, instead of using a CDN to download bootstrap and make sure your version is up-to-date, you can install it with NPM, which will help you manage the downloads and versions.
+- Initialize new Node project with NPM: `npm init`. This will simply create one file, `package.json`.
+- NPM works with `package.json`, a file in your project, which is a list of project information. NPM makes sure that packages do not get uploaded or tracked in git (imagine how much unnecessary code you could be pushing and pulling each time). To make sure all collaborators are still on the same page, any package listed in `package.json` can easily be downloaded with one command, `npm install`, when somebody clones your project.
+- To install NPM packages *and* save them to `package.json`, use the `--save specification`: `npm install --save express` or `npm install --save bootstrap`.
+
+
+
+### Express JS
+Express is a cutting-edge, unopinionated, server-side JavaScript framework that runs on a Node.js server. It is a popular framework with a bevy of modules you can add to it. Node is the platform and Express provides the specific functionality. If you were building a house rather than a server, Node would be the foundation and utilities, express would be the building material that comprises the above ground building.
+
+![image](https://cloud.githubusercontent.com/assets/6520345/18060592/f5954682-6dd3-11e6-99ba-5dc0b42a4ff8.png)
+
+
+
+
+- Express is a framework built on top of Node.js that makes development of web servers more intuitive and quicker.
+- Express allows us to easily set up routes that will trigger actions such as rendering pages or returning JSON.
+
+Much like jQuery does for JavaScript, Express provides easy, intuitive syntax and a lot of built in functionality.
+
+### Hello World in Express
+
+```javascript
+const express = require('express');
+const app = express();
+
+app.get('/', (req, res) => res.send('Hello World!'))
+
+const server = app.listen(3000);
+```
+
+
+
+
+### Express file tree
+
+With frontend and backend code to organize, we should make sure to keep our files in a logical order.
+
+```
+├── server.js  // your server code
+├── package.json    // lists dependencies; changed by npm install --save somePackage
+├── public  // i.e. client-side
+│   ├── images  // images to serve to client
+│   ├── scripts
+│       └── app.js   // client-side javascript file
+│   └── styles
+│       └── style.css
+├── vendor // optional 2nd public dir for jQuery & bootstrap if we choose not to use CDNs
+├── views  // html files that we'll serve
+│   └── index.html
+└── node_modules  // don't edit files in here!
+    ├── express // etc
+```
+
+> We should also add `node_modules` to a `.gitignore` file so it is not checked into git.  Future developers can just run `npm install` to get the packages listed in `package.json`
+
 ## Install Node packages
 
 - People will write code and make it available online for others to use
